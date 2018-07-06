@@ -146,8 +146,10 @@ public class Setup1Activity extends Activity implements AdapterView.OnItemSelect
             Matcher m = batteryPattern.matcher(response);
             if (m.matches()) {
                 int level = Integer.parseInt(m.group(1));
+                System.out.println(level);
                 if(level >= 10) {
                     changeStatus(pos, CarStatus.READY);
+                    return;
                 }
             }
             //Todo if success checkAllReady()
