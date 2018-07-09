@@ -29,7 +29,6 @@ public class Demo1Activity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo1);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
         startButton = findViewById(R.id.startButton);
         stopButton = findViewById(R.id.stopButton);

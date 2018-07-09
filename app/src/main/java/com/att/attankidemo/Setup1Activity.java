@@ -53,7 +53,6 @@ public class Setup1Activity extends Activity implements AdapterView.OnItemSelect
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup1);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         queue = Volley.newRequestQueue(this);
         activateButton = findViewById(R.id.activateButton);
         UiUtils.disableButton(activateButton);
