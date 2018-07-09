@@ -27,6 +27,11 @@ import java.util.regex.Pattern;
  */
 public class Setup1Activity extends Activity implements AdapterView.OnItemSelectedListener {
 
+    public static final String DEMO_1_INNER_CAR = "com.att.attankidemo.Demo1_Inner_Car";
+    public static final String DEMO_1_MIDDLE_CAR = "com.att.attankidemo.Demo1_Middle_Car";
+    public static final String DEMO_1_OUTER_CAR = "com.att.attankidemo.Demo1_Outer_Car";
+
+
     RequestQueue queue;
     String[] carNames = {"", "", ""};
     CarStatus[] carStatuses = {CarStatus.UNSELECTED, CarStatus.UNSELECTED, CarStatus.UNSELECTED};
@@ -51,7 +56,7 @@ public class Setup1Activity extends Activity implements AdapterView.OnItemSelect
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         queue = Volley.newRequestQueue(this);
         activateButton = findViewById(R.id.activateButton);
-        disableButton();
+        UiUtils.disableButton(activateButton);
 
 
         spinner0 = findViewById(R.id.spinner0);
@@ -76,7 +81,7 @@ public class Setup1Activity extends Activity implements AdapterView.OnItemSelect
             carNames[pos] = "";
             changeStatus(pos, CarStatus.UNSELECTED);
         } else {
-            if(carNames[pos] != name) {
+            if(carNames[pos] != name || carStatuses[pos] != CarStatus.READY) {
                 carNames[pos] = name;
                 changeStatus(pos, CarStatus.SELECTED);
                 checkCarStatus(name, pos);
@@ -93,6 +98,8 @@ public class Setup1Activity extends Activity implements AdapterView.OnItemSelect
         carStatuses[pos] = status;
 
         changeStatusColor(pos, status);
+
+        checkAllReady();
     }
 
     private void changeStatusColor(int pos, CarStatus status) {
@@ -133,10 +140,6 @@ public class Setup1Activity extends Activity implements AdapterView.OnItemSelect
     }
 
     public void receiveCarStatus(String response, int pos, String name) {
-        System.out.println("/////////////////////////////////////");
-        System.out.println(response);
-        System.out.println("/////////////////////////////////////");
-
         if(!carNames[pos].equals(name)){
             // Old request
             return;
@@ -152,7 +155,6 @@ public class Setup1Activity extends Activity implements AdapterView.OnItemSelect
                     return;
                 }
             }
-            //Todo if success checkAllReady()
         }
 
         //Something did not work correctly, set to red
@@ -162,10 +164,13 @@ public class Setup1Activity extends Activity implements AdapterView.OnItemSelect
     private boolean checkAllReady() {
         if(carStatuses[0] == CarStatus.READY && carStatuses[1] == CarStatus.READY
                 && carStatuses[2] == CarStatus.READY) {
-            enableButton();
-            return true;
+            if(!carNames[0].equals(carNames[1]) && !carNames[0].equals(carNames[2]) && !carNames[1].equals(carNames[2])) {
+                UiUtils.enableButton(activateButton);
+                return true;
+            }
         }
 
+        UiUtils.disableButton(activateButton);
         return false;
     }
 
@@ -189,18 +194,12 @@ public class Setup1Activity extends Activity implements AdapterView.OnItemSelect
 
 
 
-    private void enableButton() {
-        activateButton.setAlpha(1f);
-        activateButton.setClickable(true);
-    }
-
-    private void disableButton() {
-        activateButton.setAlpha(.5f);
-        activateButton.setClickable(false);
-    }
 
     public void activate(View view) {
         Intent intent = new Intent(this, Demo1Activity.class);
+        intent.putExtra(DEMO_1_INNER_CAR, carNames[0]);
+        intent.putExtra(DEMO_1_MIDDLE_CAR, carNames[1]);
+        intent.putExtra(DEMO_1_OUTER_CAR, carNames[2]);
         startActivity(intent);
     }
 
