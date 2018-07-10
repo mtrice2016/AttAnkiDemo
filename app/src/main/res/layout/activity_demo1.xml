@@ -48,4 +48,17 @@
         app:layout_constraintEnd_toEndOf="@+id/space"
         app:layout_constraintTop_toTopOf="@+id/space" />
 
+    <Button
+        android:id="@+id/forceButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="forceStop"
+        android:text="Force Stop"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

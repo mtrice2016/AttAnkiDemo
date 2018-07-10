@@ -72,6 +72,12 @@ public class Demo1Activity extends Activity {
         StringRequest request = AnkiRequests.setSpeed(0);
         queue.add(request);
 
+        UiUtils.disableButton(stopButton);
+        UiUtils.enableButton(startButton);
+    }
+
+    public void forceStop(View view) {
+        queue.add(AnkiRequests.setSpeed(0));
         UiUtils.enableButton(startButton);
     }
 
