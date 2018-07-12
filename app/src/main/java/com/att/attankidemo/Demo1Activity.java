@@ -2,7 +2,7 @@ package com.att.attankidemo;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +10,8 @@ import android.widget.Button;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import java.net.URL;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -24,6 +26,8 @@ public class Demo1Activity extends Activity {
 
     Button startButton;
     Button stopButton;
+
+    RunDemoTask task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,57 +44,73 @@ public class Demo1Activity extends Activity {
 
         queue = Volley.newRequestQueue(this);
 
-        UiUtils.disableButton(stopButton);
+        Utils.disableButton(stopButton);
     }
 
 
     public void startDemo(View view) {
-        UiUtils.disableButton(startButton);
-        UiUtils.disableButton(stopButton);
-
-        queue.add(AnkiRequests.setLights(innerCar,15,0,0));
-        queue.add(AnkiRequests.setLights(middleCar, 14,9,0));
-        queue.add(AnkiRequests.setLights(outerCar, 0,15,0));
-
-        queue.add(AnkiRequests.setSpeed(outerCar, 645));
-        queue.add(AnkiRequests.setSpeed(middleCar, 570));
-        queue.add(AnkiRequests.setSpeed(innerCar, 500));
-
-        sleep(8);
-
-        queue.add(AnkiRequests.setSpeed(outerCar, 910));
-        queue.add(AnkiRequests.setSpeed(middleCar, 810));
-
-        sleep(8);
-
-        queue.add(AnkiRequests.setSpeed(outerCar, 1250));
-
-        UiUtils.enableButton(stopButton);
+        task = new RunDemoTask();
+        task.execute();
     }
 
     public void endDemo(View view) {
-        StringRequest request = AnkiRequests.setSpeed(0);
-        queue.add(request);
+        queue.add(AnkiRequests.setSpeed(0));
 
-        UiUtils.disableButton(stopButton);
-        UiUtils.enableButton(startButton);
+        Utils.disableButton(stopButton);
+        Utils.enableButton(startButton);
     }
 
     public void forceStop(View view) {
-        queue.add(AnkiRequests.setSpeed(0));
-        UiUtils.enableButton(startButton);
-    }
-
-
-
-    private boolean sleep(int sec) {
-        try {
-            Thread.sleep(sec * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            return false;
+        if(task != null && task.getStatus() != AsyncTask.Status.FINISHED){
+            task.cancel(true);
         }
 
-        return true;
+        queue.add(AnkiRequests.setSpeed(0));
+        Utils.enableButton(startButton);
     }
+
+
+
+    private class RunDemoTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            if(!this.isCancelled()) {
+                Utils.disableButton(startButton);
+                Utils.disableButton(stopButton);
+            }
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            if(this.isCancelled()) return null;
+            queue.add(AnkiRequests.setLights(innerCar,15,0,0));
+            queue.add(AnkiRequests.setLights(middleCar, 14,9,0));
+            queue.add(AnkiRequests.setLights(outerCar, 0,15,0));
+
+            queue.add(AnkiRequests.setSpeed(outerCar, 645));
+            queue.add(AnkiRequests.setSpeed(middleCar, 570));
+            queue.add(AnkiRequests.setSpeed(innerCar, 500));
+
+            Utils.sleep(8);
+            if(this.isCancelled()) return null;
+
+            queue.add(AnkiRequests.setSpeed(outerCar, 910));
+            queue.add(AnkiRequests.setSpeed(middleCar, 810));
+
+            Utils.sleep(8);
+            if(this.isCancelled()) return null;
+
+            queue.add(AnkiRequests.setSpeed(outerCar, 1250));
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void param) {
+            if(!this.isCancelled()) {
+                Utils.enableButton(stopButton);
+            }
+        }
+    }
+
 }

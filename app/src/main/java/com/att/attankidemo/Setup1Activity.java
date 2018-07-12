@@ -2,9 +2,7 @@ package com.att.attankidemo;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.Debug;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -55,7 +53,7 @@ public class Setup1Activity extends Activity implements AdapterView.OnItemSelect
         setContentView(R.layout.activity_setup1);
         queue = Volley.newRequestQueue(this);
         activateButton = findViewById(R.id.activateButton);
-        UiUtils.disableButton(activateButton);
+        Utils.disableButton(activateButton);
 
 
         spinner0 = findViewById(R.id.spinner0);
@@ -164,12 +162,12 @@ public class Setup1Activity extends Activity implements AdapterView.OnItemSelect
         if(carStatuses[0] == CarStatus.READY && carStatuses[1] == CarStatus.READY
                 && carStatuses[2] == CarStatus.READY) {
             if(!carNames[0].equals(carNames[1]) && !carNames[0].equals(carNames[2]) && !carNames[1].equals(carNames[2])) {
-                UiUtils.enableButton(activateButton);
+                Utils.enableButton(activateButton);
                 return true;
             }
         }
 
-        UiUtils.disableButton(activateButton);
+        Utils.disableButton(activateButton);
         return false;
     }
 
