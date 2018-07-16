@@ -34,6 +34,11 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/LifecycleAwareTheme"></activity>
         <activity
+            android:name=".Setup2Activity"
+            android:screenOrientation="sensorLandscape"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/LifecycleAwareTheme"></activity>
+        <activity
             android:name=".Demo2Activity"
             android:label="@string/title_activity_demo2"
             android:screenOrientation="sensorLandscape"

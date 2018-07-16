@@ -72,6 +72,22 @@ public class AnkiRequests {
         return generateRequest(query, Request.Method.POST);
     }
 
+//    public static StringRequest mapTrack(String name) {
+//        String query = "/mapTrack/" + name + "/";
+//        return generateRequest(query, Request.Method.POST);
+//    }
+//
+//    public static StringRequest saveMap() {
+//        return generateRequest("/mapSave", Request.Method.POST);
+//    }
+//
+//    public static StringRequest loadMap() {
+//        return generateRequest("/mapLoad", Request.Method.POST);
+//    }
+//
+//    public static StringRequest getMap() {
+//        return generateRequest("/getTrackMapData");
+//    }
 
 
 }

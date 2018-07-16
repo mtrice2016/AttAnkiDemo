@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
     }
 
     public void demo2(View view) {
-        Intent intent = new Intent(this, Demo1Activity.class);
+        Intent intent = new Intent(this, Setup2Activity.class);
         startActivity(intent);
     }
 

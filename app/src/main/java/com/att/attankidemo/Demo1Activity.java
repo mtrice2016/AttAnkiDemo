@@ -71,7 +71,7 @@ public class Demo1Activity extends AppCompatActivity {
 
     public void endDemo(View view) {    endDemo();  }
 
-    public void endDemo() {
+    private void endDemo() {
         queue.add(AnkiRequests.setSpeed(0));
 
         Utils.disableButton(stopButton);
