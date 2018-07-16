@@ -1,9 +1,14 @@
 package com.att.attankidemo;
 
 import android.app.Activity;
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -17,7 +22,7 @@ import java.net.URL;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class Demo1Activity extends Activity {
+public class Demo1Activity extends AppCompatActivity {
 
     private RequestQueue queue;
     private String innerCar;
@@ -49,11 +54,24 @@ public class Demo1Activity extends Activity {
 
 
     public void startDemo(View view) {
+        cleanTask();
+
         task = new RunDemoTask();
+        getLifecycle().addObserver(task);
         task.execute();
     }
 
-    public void endDemo(View view) {
+    private void cleanTask() {
+        if(task != null) {
+            task.cancel(true);
+            this.getLifecycle().removeObserver(task);
+        }
+    }
+
+
+    public void endDemo(View view) {    endDemo();  }
+
+    public void endDemo() {
         queue.add(AnkiRequests.setSpeed(0));
 
         Utils.disableButton(stopButton);
@@ -62,16 +80,23 @@ public class Demo1Activity extends Activity {
 
     public void forceStop(View view) {
         if(task != null && task.getStatus() != AsyncTask.Status.FINISHED){
-            task.cancel(true);
+            cleanTask();
         }
 
         queue.add(AnkiRequests.setSpeed(0));
+        Utils.disableButton(stopButton);
         Utils.enableButton(startButton);
     }
 
 
 
-    private class RunDemoTask extends AsyncTask<Void, Void, Void> {
+    protected class RunDemoTask extends AsyncTask<Void, Void, Void> implements LifecycleObserver {
+        private boolean autoStop;
+
+        protected RunDemoTask() {
+            autoStop = false;
+        }
+
         @Override
         protected void onPreExecute() {
             if(!this.isCancelled()) {
@@ -102,6 +127,12 @@ public class Demo1Activity extends Activity {
 
             queue.add(AnkiRequests.setSpeed(outerCar, 1250));
 
+            Utils.sleep(15);
+            if(this.isCancelled()) return null;
+            if(autoStop) {
+                endDemo();
+            }
+
             return null;
         }
 
@@ -110,6 +141,31 @@ public class Demo1Activity extends Activity {
             if(!this.isCancelled()) {
                 Utils.enableButton(stopButton);
             }
+        }
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+        public void stopEverything() {
+            if(isFinishing()) {
+                queue.add(AnkiRequests.setSpeed(0));
+                Utils.millSleep((short)50);
+                queue.add(AnkiRequests.setSpeed(0));
+            }
+        }
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+        public void queueStop() {
+            if(!isChangingConfigurations()) {
+                if(this.getStatus() == Status.FINISHED) {
+                    Demo1Activity.this.endDemo();
+                } else {
+                    autoStop = true;
+                }
+            }
+        }
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+        public void cancelStop() {
+            autoStop = false;
         }
     }
 

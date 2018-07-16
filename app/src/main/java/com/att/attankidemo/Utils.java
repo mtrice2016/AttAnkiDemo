@@ -15,8 +15,12 @@ public class Utils {
     }
 
     public static boolean sleep(int sec) {
+        return millSleep(sec * 1000);
+    }
+
+    public static boolean millSleep(int mill) {
         try {
-            Thread.sleep(sec * 1000);
+            Thread.sleep(mill);
         } catch (InterruptedException e) {
             e.printStackTrace();
             return false;

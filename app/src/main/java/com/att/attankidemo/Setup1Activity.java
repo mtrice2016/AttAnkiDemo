@@ -78,7 +78,7 @@ public class Setup1Activity extends Activity implements AdapterView.OnItemSelect
             carNames[pos] = "";
             changeStatus(pos, CarStatus.UNSELECTED);
         } else {
-            if(carNames[pos] != name || carStatuses[pos] != CarStatus.READY) {
+            if(!carNames[pos].equals(name) || carStatuses[pos] != CarStatus.READY) {
                 carNames[pos] = name;
                 changeStatus(pos, CarStatus.SELECTED);
                 checkCarStatus(name, pos);

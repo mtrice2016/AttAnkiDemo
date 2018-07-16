@@ -10,12 +10,10 @@
 
     <FrameLayout
         android:id="@+id/frame2"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,8 +23,8 @@
 
         <Spinner
             android:id="@+id/spinner1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:dropDownWidth="match_parent"
             android:entries="@array/car_selection_names"
             android:spinnerMode="dialog" />
@@ -34,11 +32,10 @@
 
     <FrameLayout
         android:id="@+id/frame1"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/frame2"
@@ -46,8 +43,8 @@
 
         <Spinner
             android:id="@+id/spinner0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:dropDownWidth="match_parent"
             android:entries="@array/car_selection_names"
             android:spinnerMode="dialog" />
@@ -55,10 +52,9 @@
 
     <FrameLayout
         android:id="@+id/frame3"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="40dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -67,7 +63,7 @@
 
         <Spinner
             android:id="@+id/spinner2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:dropDownWidth="match_parent"
             android:entries="@array/car_selection_names"
@@ -159,11 +155,13 @@
         android:id="@+id/activateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
         android:onClick="activate"
         android:text="Activate"
-        app:layout_constraintEnd_toEndOf="@+id/frame2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frame2" />
 </android.support.constraint.ConstraintLayout>
