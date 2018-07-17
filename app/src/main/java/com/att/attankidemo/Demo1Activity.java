@@ -146,6 +146,7 @@ public class Demo1Activity extends AppCompatActivity {
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         public void stopEverything() {
             if(isFinishing()) {
+                this.cancel(true);
                 queue.add(AnkiRequests.setSpeed(0));
                 Utils.millSleep((short)50);
                 queue.add(AnkiRequests.setSpeed(0));
