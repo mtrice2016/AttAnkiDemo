@@ -44,6 +44,11 @@
             android:screenOrientation="sensorLandscape"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/LifecycleAwareTheme" />
+        <activity
+            android:name=".Demo3Activity"
+            android:screenOrientation="sensorLandscape"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/LifecycleAwareTheme" />
     </application>
 
 </manifest>

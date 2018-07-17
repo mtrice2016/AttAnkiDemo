@@ -143,6 +143,7 @@ public class Demo1Activity extends AppCompatActivity {
             }
         }
 
+
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         public void stopEverything() {
             if(isFinishing()) {

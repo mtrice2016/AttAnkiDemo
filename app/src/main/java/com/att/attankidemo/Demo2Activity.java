@@ -45,7 +45,8 @@ public class Demo2Activity extends AppCompatActivity {
     public void startDemo(View view) {
         queue.add(AnkiRequests.setLights(car4g,14,9,0));
         queue.add(AnkiRequests.setLights(car5g, 0, 15,0));
-        queue.add(AnkiRequests.setSpeed(1000));
+        queue.add(AnkiRequests.setSpeed(car5g, 1000));
+        queue.add(AnkiRequests.setSpeed(car4g, 1000));
         switchToStopScreen();
     }
 

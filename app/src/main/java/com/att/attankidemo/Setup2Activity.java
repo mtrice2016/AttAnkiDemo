@@ -40,6 +40,8 @@ public class Setup2Activity extends Activity implements AdapterView.OnItemSelect
     TextView color0;
     TextView color1;
 
+    String activityToOpen;
+
     private static final Pattern batteryPattern = Pattern.compile("\\{\"battery\":(\\d+)\\}");
 
 
@@ -48,7 +50,10 @@ public class Setup2Activity extends Activity implements AdapterView.OnItemSelect
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup2);
+        Intent intent = getIntent();
+        activityToOpen = intent.getStringExtra(MainActivity.MAIN_ACTIVITY_TO_OPEN);
         queue = Volley.newRequestQueue(this);
+
         activateButton = findViewById(R.id.activateButton);
         Utils.disableButton(activateButton);
 
@@ -182,7 +187,7 @@ public class Setup2Activity extends Activity implements AdapterView.OnItemSelect
 
 
     public void activate(View view) {
-        Intent intent = new Intent(this, Demo2Activity.class);
+        Intent intent = new Intent(this, activityToOpen.equals("2") ? Demo2Activity.class : Demo3Activity.class);
         intent.putExtra(DEMO_2_5G_CAR, carNames[1]);
         intent.putExtra(DEMO_2_4G_CAR, carNames[0]);
         startActivity(intent);
