@@ -29,4 +29,12 @@ public class Utils {
         return true;
     }
 
+    public static int clamp(int x, int l, int u) {
+        if(x < l)
+            return l;
+        if(x > u)
+            return u;
+        return x;
+    }
+
 }
