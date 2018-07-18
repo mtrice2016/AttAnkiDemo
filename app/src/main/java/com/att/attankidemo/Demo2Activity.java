@@ -35,8 +35,8 @@ public class Demo2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_demo2);
 
         Intent intent = getIntent();
-        car4g = intent.getStringExtra(Setup2Activity.DEMO_2_5G_CAR);
-        car5g = intent.getStringExtra(Setup2Activity.DEMO_2_4G_CAR);
+        car5g = intent.getStringExtra(Setup2Activity.DEMO_2_5G_CAR);
+        car4g = intent.getStringExtra(Setup2Activity.DEMO_2_4G_CAR);
 
         queue = Volley.newRequestQueue(this);
     }
